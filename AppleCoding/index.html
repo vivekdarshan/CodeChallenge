@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coding Challenge</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <style>
+        body     { padding-top:30px; }
+    </style>
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+<div ng-app="validationApp" ng-controller="mainController">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-6">
+                <!-- FORM ============ -->
+
+                <form name="userForm" ng-submit="submitForm()" novalidate>
+
+                    <!-- USERNAME -->
+                    <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
+                        <label>Username</label>
+                        <input type="email" name="email" class="form-control" ng-model="user.email" ng-maxlength="56" required>
+                        <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
+                    </div>
+
+                    <!-- FIRST NAME -->
+                    <div class="form-group" ng-class="{ 'has-error' : userForm.fname.$invalid && !userForm.fname.$pristine }">
+                        <label>First Name</label>
+                        <input type="text" name="fname" class="form-control" ng-model="user.fname" ng-maxlength="50">
+                        <p ng-show="userForm.fname.$invalid && !userForm.fname.$pristine" class="help-block">You first name is required.</p>
+                    </div>
+
+                    <!-- LAST NAME -->
+                    <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                        <label>Last Name</label>
+                        <input type="text" name="lname" class="form-control" ng-model="user.lname" ng-maxlength="50">
+                        <p ng-show="userForm.lname.$invalid && !userForm.lname.$pristine" class="help-block">You last name is required.</p>
+                    </div>
+
+                    <!-- PASSWORD -->
+                    <div class="form-group" ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine }">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" ng-model="user.password" ng-minlength="6" ng-required="">
+                        <p ng-show="userForm.username.$error.minlength" class="help-block">Password is too short.</p>
+                        <!--<p ng-show="userForm.username.$error.maxlength" class="help-block">Username is too long.</p>-->
+                    </div>
+
+                    <!-- CONFIRM PASSWORD -->
+                    <div class="form-group" ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine }">
+                        <label>Confirm Password</label>
+                        <input type="password" name="password 2" class="form-control" ng-model="user.password2" ng-minlength="6" ng-required="" pw-check="password2">
+                        <!--<p ng-show="userForm.username.$error.minlength" class="help-block">Password is too short.</p>-->
+                        <!--<p ng-show="userForm.username.$error.maxlength" class="help-block">Username is too long.</p>-->
+                        <div class="msg-block" ng-show="userForm.$error"> <span class="msg-error" ng-show="userForm.pw2.$error.pwmatch">Passwords don't match.</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
+
+                </form>
+            </div>
+            <div class="col-sm-6">
+                <!-- VALIDATION TABLES ======== -->
+                <div class="row">
+                    <div class="col-xs-3">
+                        <h3>Form</h3>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td ng-class="{ success: userForm.$valid, danger: userForm.$invalid }">Valid</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: userForm.$pristine, danger: !userForm.$pristine }">Pristine</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: userForm.$dirty }">Dirty</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-3">
+                        <h3>First Name</h3>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td ng-class="{ success: userForm.fname.$valid, danger: userForm.fname.$invalid }">Valid</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: userForm.fname.$pristine, danger: !userForm.fname.$pristine }">Pristine</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: userForm.fname.$dirty }">Dirty</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: userForm.fname.$touched }">Touched</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-3">
+                        <h3>Last Name</h3>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td ng-class="{ success: userForm.lname.$valid, danger: userForm.lname.$invalid }">Valid</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: userForm.lname.$pristine, danger: !userForm.lname.$pristine }">Pristine</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: userForm.lname.$dirty }">Dirty</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: userForm.lname.$touched }">Touched</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-3">
+                        <h3>Password</h3>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td ng-class="{ success: userForm.password.$valid, danger: userForm.username.$invalid }">Valid</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: userForm.password.$pristine, danger: !userForm.username.$pristine }">Pristine</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: userForm.password.$dirty }">Dirty</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: userForm.password.$touched }">Touched</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-3">
+                        <h3>Username</h3>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td ng-class="{ success: userForm.email.$valid, danger: userForm.email.$invalid }">Valid</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: userForm.email.$pristine, danger: !userForm.email.$pristine }">Pristine</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: userForm.email.$dirty }">Dirty</td>
+                            </tr>
+                            <tr>
+                                <td ng-class="{ success: userForm.email.$touched }">Touched</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
